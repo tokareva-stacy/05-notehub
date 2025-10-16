@@ -60,7 +60,7 @@ const App: React.FC = () => {
   }
 
   const { notes, totalPages } = data!;
-
+  
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
@@ -73,6 +73,7 @@ const App: React.FC = () => {
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />
+        
         <button className={css.button} onClick={openModal}>
           Create note +
         </button>

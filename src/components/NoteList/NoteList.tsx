@@ -9,6 +9,7 @@ interface NoteListProps {
 }
 
 const NoteList: React.FC<NoteListProps> = ({ notes }) => {
+    
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
@@ -20,12 +21,13 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
       console.error(`Error deleting note ${variables}:`, error);
       alert('Failed to delete note. See console for details.');
     },
-  });
+    
+  });console.log('Notes received by NoteList:', notes);
 
-  const handleDelete = (id: string) => {
+    const handleDelete = (id: string) => {
     deleteMutation.mutate(id);
   };
-
+  
   if (notes.length === 0) {
     return (
       <p className={css.noNotesMessage}>
@@ -36,15 +38,15 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
 
   return (
     <ul className={css.list}>
-      {notes.map((note) => (
-        <li key={note._id} className={css.listItem}>
+          {notes.map((note) => (
+        <li key={note.id} className={css.listItem}>
           <h2 className={css.title}>{note.title}</h2>
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
             <button
               className={css.button}
-              onClick={() => handleDelete(note._id)}
+              onClick={() => handleDelete(note.id)}
               disabled={deleteMutation.isPending}
             >
               {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
