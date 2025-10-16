@@ -44,7 +44,7 @@ const App: React.FC = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
+ 
   if (isLoading) {
     return <div className={css.app}>Loading notes...</div>;
   }
@@ -61,6 +61,10 @@ const App: React.FC = () => {
 
   const { notes, totalPages } = data!;
   
+  const hasNotes = notes && notes.length > 0;
+
+  const showPagination = totalPages > 1;
+
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
@@ -68,20 +72,32 @@ const App: React.FC = () => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
         
+        {showPagination && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        )}
         <button className={css.button} onClick={openModal}>
-          Create note +
+          Створити нотатку +
         </button>
       </header>
-      <NoteList notes={notes} />
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <NoteForm onClose={closeModal} />
-      </Modal>
+
+      {hasNotes ? (
+        <NoteList notes={notes} />
+      ) : (
+        <p className={css.noNotesMessage}>
+          {searchQuery ? 'No notes found for your query. ' : 'No notes available. Create a new one!'}
+        </p>
+      )}
+
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <NoteForm onClose={closeModal} />
+        </Modal>
+      )}
     </div>
   );
 };
