@@ -17,7 +17,6 @@ const instance = axios.create({
   },
 });
 
-
 export interface FetchNotesResponse {
   notes: Note[];
   totalNotes: number;
@@ -57,7 +56,6 @@ export const fetchNotes = async ({
   return response.data;
 };
 
-
 export const createNote = async (
   noteData: NewNoteData
 ): Promise<Note> => {
@@ -67,7 +65,6 @@ export const createNote = async (
   );
   return response.data.note;
 };
-
 
 export const deleteNote = async (
   id: string

@@ -21,8 +21,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes }) => {
       console.error(`Error deleting note ${variables}:`, error);
       alert('Failed to delete note. See console for details.');
     },
-    
-  });console.log('Notes received by NoteList:', notes);
+  });
 
     const handleDelete = (id: string) => {
     deleteMutation.mutate(id);
